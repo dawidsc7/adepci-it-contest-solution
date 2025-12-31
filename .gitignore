@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.vscode/
+.idea/
+solution.txt
+read_pdf.py
+REGULAMIN-KONKURSU-Adepci-IT.pdf
+unnamed.png
