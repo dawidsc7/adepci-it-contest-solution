@@ -9,7 +9,8 @@ def calculate_score(text: str) -> int:
     Returns:
         int: Score based on Polish keyword matches.
     """
-    polish_keywords = ["i", "w", "z", "na", "do", "jest", "jak", "aby", "czy", "jesli", "to", "nie"]
+    polish_keywords = ["i", "w", "z", "na", "do", "jest", "jak", "aby", "czy", "jesli", "to", "nie",
+    "się", "od", "za", "po", "dla", "przy", "ze", "oraz", "lub", "ale", "już", "tak", "było", "być", "może", "można"]
     
     for char in [".", ",", ":", "@"]:
         text = text.replace(char, " ")
@@ -20,5 +21,24 @@ def calculate_score(text: str) -> int:
     for word in words:
         if word in polish_keywords:
             score += 1
-            
+    if has_polish_characters(text):
+        score += 3
     return score
+
+def has_polish_characters(text: str) -> bool:
+    """
+    Checks if the text has polish special characters.
+    
+    Args:
+        text (str): The text to analyze.
+        
+    Returns:
+        bool: True if the text contains polish special characters, False otherwise.
+    """
+    polish_chars = "ąćęłńóśźżĄĆĘŁŃÓŚŹŻ"
+    
+    for char in polish_chars:
+        if char in text:
+            return True
+    
+    return False
