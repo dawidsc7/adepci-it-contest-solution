@@ -22,9 +22,12 @@ def find_solution(ciphertext: str) -> tuple:
     max_score = 0
     correct_shift = 0
     all_versions = []
+    candidates = []
     
     for shift in range(1, 26):
         candidate = decrypt_text(ciphertext, shift)
+        candidate_score= calculate_score(candidate)
+        candidates.append((candidate_score, shift, candidate))
         all_versions.append(candidate)
         
         try:
@@ -36,7 +39,12 @@ def find_solution(ciphertext: str) -> tuple:
                     best_text = candidate
         except LangDetectException:
             continue
-                
+    if not best_text and candidates:
+        candidates.sort(reverse=True, key=lambda x: x[0])
+        max_score, correct_shift, best_text = candidates[0]    
+        print(f"\nFALLBACK: langdetect nie wykrył polskiego tekstu")
+        print(f"Użyto score-based detection")
+        print(f"Najlepszy wynik: shift={correct_shift}, score={max_score}")
     return best_text, correct_shift, all_versions
 
 
