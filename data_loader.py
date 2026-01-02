@@ -16,4 +16,4 @@ def get_encrypted_text(source=None):
         with open(source, "r", encoding="utf-8") as file:
             return file.read().strip()
     else:
-        return source
+        return source.strip()
