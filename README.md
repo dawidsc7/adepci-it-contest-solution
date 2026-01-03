@@ -5,7 +5,7 @@ Aplikacja stworzona na potrzeby konkursu "Adepci IT". Program automatycznie desz
 ## Funkcjonalności
 
 - **Automatyczne łamanie szyfru**: Sprawdza wszystkie 26 możliwych przesunięć.
-- **Dwuetapowa detekcja języka**: Łączy bibliotekę `langdetect` z autorskim systemem punktacji opartym o polskie słowa kluczowe, co zapewnia wysoką skuteczność nawet przy krótkich tekstach.
+- **Inteligentna detekcja języka**: Wykorzystuje bibliotekę `lingua-py` do automatycznego rozpoznawania języka polskiego z wysoką dokładnością, nawet przy krótkich tekstach.
 - **Obsługa plików i tekstu**: Możliwość podania ścieżki do pliku lub tekstu bezpośrednio w argumencie.
 - **Raportowanie**: Zapisuje zdekodowaną wiadomość oraz pełną analizę do plików wynikowych.
 
