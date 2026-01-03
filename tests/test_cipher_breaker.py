@@ -169,8 +169,8 @@ class TestFindSolutionAllVersions:
         assert all_versions[25] == "fqpnk faop zveoewf"
 
 
-class TestFindSolutionFallback:
-    """Tests for fallback mechanism."""
+class TestFindSolutionEdgeCases:
+    """Tests for edge cases with short or ambiguous text."""
     
     def test_short_text_returns_result(self):
         """Very short text still returns a result."""
@@ -179,8 +179,8 @@ class TestFindSolutionFallback:
         assert isinstance(shift, int)
         assert len(all_versions) == 26
     
-    def test_non_polish_text_uses_fallback(self):
-        """Non-Polish text uses score-based fallback."""
+    def test_non_polish_text_returns_result(self):
+        """Non-Polish text still returns best confidence match."""
         # Text that probably won't be detected as Polish
         result = find_solution("xyz")
         best_text, shift, all_versions = result

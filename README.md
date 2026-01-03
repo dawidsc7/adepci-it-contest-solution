@@ -53,16 +53,17 @@ python -m pytest tests/
 Program wykorzystuje podejście brute-force z inteligentną detekcją języka:
 
 1. **Generowanie kandydatów**: Dla każdego z 26 możliwych przesunięć (0-25) generowany jest odszyfrowany tekst.
-2. **Detekcja języka**: Każdy kandydat jest analizowany przez bibliotekę `langdetect` w celu identyfikacji języka polskiego.
-3. **Scoring**: Kandydaci zidentyfikowani jako polski są dodatkowo punktowani na podstawie występowania typowych polskich słów (spójniki, przyimki, zaimki).
-4. **Fallback**: Jeśli `langdetect` nie wykryje polskiego tekstu, program wybiera kandydata z najwyższym wynikiem scoringu - zapewnia to działanie nawet dla bardzo krótkich tekstów.
+2. **Detekcja języka**: Każdy kandydat jest analizowany przez bibliotekę `lingua-py`, która oblicza pewność (confidence score 0.0-1.0) że tekst jest w języku polskim.
+3. **Wybór najlepszego**: Kandydat z najwyższym confidence score jest wybierany jako rozwiązanie.
+4. **Fallback**: Dla bardzo krótkich tekstów, gdy detekcja języka nie jest możliwa, zwracany jest tekst oryginalny.
 
-## Dlaczego langdetect?
+## Dlaczego lingua-py?
 
-Wybrano bibliotekę `langdetect` ze względu na:
-- **Prostotę** - nie wymaga zewnętrznych API ani kluczy
-- **Sprawdzone działanie** - port Google's language-detection
-- **Wystarczającą dokładność** - w połączeniu z autorskim systemem scoringu radzi sobie nawet z trudnymi przypadkami
+Wybrano bibliotekę `lingua-py` ze względu na:
+- **Wysoką dokładność** - szczególnie dla krótkich tekstów
+- **Deterministyczne wyniki** - ten sam tekst zawsze daje ten sam wynik
+- **Confidence score** - pozwala porównać pewność detekcji między kandydatami
+- **Brak zewnętrznych plików** - modele wbudowane w bibliotekę
 
 ## Przykładowy output
 

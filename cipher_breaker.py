@@ -1,13 +1,16 @@
-from langdetect import detect, LangDetectException
-from analyzer import calculate_score
+from lingua import Language, LanguageDetectorBuilder
+
+# Build detector with all languages for accurate Polish detection
+# Using detect_language_of() to identify Polish candidates
+detector = LanguageDetectorBuilder.from_all_languages().build()
 
 
-def find_solution(ciphertext: str) -> tuple:
+def find_solution(ciphertext: str) -> tuple[str, int, list[str]]:
     """
     Tries all possible Caesar cipher shifts and finds the Polish message.
     
-    Uses langdetect library to identify Polish text, then additionally
-    filters using calculate_score function for better accuracy.
+    Uses lingua-py library to detect language of each candidate.
+    Selects the candidate detected as Polish with highest confidence.
     
     Args:
         ciphertext (str): The encrypted text to decrypt.
@@ -16,35 +19,31 @@ def find_solution(ciphertext: str) -> tuple:
         tuple: (best_text, correct_shift, all_versions)
             - best_text: The most likely Polish decryption
             - correct_shift: The shift value that produced best_text
-            - all_versions: List of all 25 decryption attempts
+            - all_versions: List of all 26 decryption attempts
     """
     best_text = ""
-    max_score = 0
+    best_confidence = 0.0
     correct_shift = 0
     all_versions = []
-    candidates = []
     
-    for shift in range(1, 26):
+    for shift in range(26):
         candidate = decrypt_text(ciphertext, shift)
-        candidate_score= calculate_score(candidate)
-        candidates.append((candidate_score, shift, candidate))
         all_versions.append(candidate)
         
-        try:
-            if detect(candidate) == 'pl':
-                score = calculate_score(candidate)
-                if score > max_score:
-                    max_score = score
-                    correct_shift = shift
-                    best_text = candidate
-        except LangDetectException:
-            continue
-    if not best_text and candidates:
-        candidates.sort(reverse=True, key=lambda x: x[0])
-        max_score, correct_shift, best_text = candidates[0]    
-        print(f"\nFALLBACK: langdetect nie wykrył polskiego tekstu")
-        print(f"Użyto score-based detection")
-        print(f"Najlepszy wynik: shift={correct_shift}, score={max_score}")
+        # Check if detected language is Polish
+        detected_language = detector.detect_language_of(candidate)
+        if detected_language == Language.POLISH:
+            confidence = detector.compute_language_confidence(candidate, Language.POLISH)
+            if confidence > best_confidence:
+                best_confidence = confidence
+                best_text = candidate
+                correct_shift = shift
+    
+    # Fallback: if no Polish detected, return original text (shift=0)
+    if not best_text and all_versions:
+        best_text = all_versions[0]
+        correct_shift = 0
+    
     return best_text, correct_shift, all_versions
 
 
