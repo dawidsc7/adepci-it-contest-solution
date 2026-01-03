@@ -60,16 +60,15 @@ def decrypt_text(text: str, shift: int) -> str:
     Returns:
         str: The decrypted text.
     """
-    result = ""
-    characters = list(text)
+    result = []
     
-    for char in characters:
+    for char in text:
         if char.isalpha():
-            position = ord(char) - ord('A') if char.isupper() else ord(char) - ord('a')
+            base = ord('A') if char.isupper() else ord('a')
+            position = ord(char) - base
             new_position = (position - shift) % 26
-            new_char = chr(new_position + ord('A') if char.isupper() else new_position + ord('a'))
-            result += new_char
+            result.append(chr(new_position + base))
         else:
-            result += char
+            result.append(char)
             
-    return result
+    return ''.join(result)
