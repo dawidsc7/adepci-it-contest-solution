@@ -1,14 +1,15 @@
 import pytest
 import os
+import results
 from results import save_results
 
 
 # ===================== FILE SAVING =====================
 
 def test_saves_solution_to_file(tmp_path, monkeypatch):
-    """Solution text should be saved to solution.txt file."""
-    # Change working directory to tmp_path so file is created there
-    monkeypatch.chdir(tmp_path)
+    """Solution text should be saved to solution.txt file in the script directory."""
+    # Mock the __file__ attribute to point to tmp_path
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     best_text = "Testowa wiadomość"
     save_results(best_text, 5, [])
@@ -20,7 +21,7 @@ def test_saves_solution_to_file(tmp_path, monkeypatch):
 
 def test_file_contains_correct_content(tmp_path, monkeypatch):
     """Saved file should contain exactly the decrypted message."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     best_text = "jutro jest dzisiaj kontakt na: test@example.com"
     save_results(best_text, 21, ["version1", "version2"])
@@ -31,7 +32,7 @@ def test_file_contains_correct_content(tmp_path, monkeypatch):
 
 def test_file_handles_polish_characters(tmp_path, monkeypatch):
     """File should correctly save Polish special characters."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     best_text = "żółć ąęśćźń"
     save_results(best_text, 1, [])
@@ -44,7 +45,7 @@ def test_file_handles_polish_characters(tmp_path, monkeypatch):
 
 def test_prints_all_versions(tmp_path, monkeypatch, capsys):
     """All decryption versions should be printed."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     versions = ["wersja1", "wersja2", "wersja3"]
     save_results("rozwiązanie", 5, versions)
@@ -56,7 +57,7 @@ def test_prints_all_versions(tmp_path, monkeypatch, capsys):
 
 def test_prints_shift_count(tmp_path, monkeypatch, capsys):
     """Shift count should be displayed in output."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     save_results("test message", 21, [])
     
@@ -66,7 +67,7 @@ def test_prints_shift_count(tmp_path, monkeypatch, capsys):
 
 def test_prints_extracted_email(tmp_path, monkeypatch, capsys):
     """Extracted email should be displayed."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     save_results("kontakt: test@example.com", 5, [])
     
@@ -78,7 +79,7 @@ def test_prints_extracted_email(tmp_path, monkeypatch, capsys):
 
 def test_extracts_simple_email(tmp_path, monkeypatch, capsys):
     """Simple email formats should be extracted."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     save_results("napisz na: user@domain.com", 1, [])
     
@@ -88,7 +89,7 @@ def test_extracts_simple_email(tmp_path, monkeypatch, capsys):
 
 def test_extracts_email_with_dots_in_name(tmp_path, monkeypatch, capsys):
     """Emails with dots in username should be extracted."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     save_results("email: jutro.jest.dzisiaj@adepci.it", 21, [])
     
@@ -98,7 +99,7 @@ def test_extracts_email_with_dots_in_name(tmp_path, monkeypatch, capsys):
 
 def test_extracts_email_with_subdomain(tmp_path, monkeypatch, capsys):
     """Emails with subdomains should be extracted."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     save_results("kontakt: info@sub.domain.org", 5, [])
     
@@ -110,7 +111,7 @@ def test_extracts_email_with_subdomain(tmp_path, monkeypatch, capsys):
 
 def test_empty_best_text_shows_error(tmp_path, monkeypatch, capsys):
     """Empty solution should display error message."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     save_results("", 0, ["v1", "v2"])
     
@@ -120,7 +121,7 @@ def test_empty_best_text_shows_error(tmp_path, monkeypatch, capsys):
 
 def test_no_email_in_text(tmp_path, monkeypatch, capsys):
     """Text without email should not crash."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     save_results("tekst bez emaila", 5, [])
     
@@ -131,7 +132,7 @@ def test_no_email_in_text(tmp_path, monkeypatch, capsys):
 
 def test_empty_versions_list(tmp_path, monkeypatch, capsys):
     """Empty versions list should not crash."""
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
     
     save_results("rozwiązanie", 5, [])
     

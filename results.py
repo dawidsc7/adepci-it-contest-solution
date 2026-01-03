@@ -1,7 +1,8 @@
 import re
+import os
 
 
-def save_results(best_text: str, correct_shift: int, all_versions: list) -> None:
+def save_results(best_text: str, correct_shift: int, all_versions: list[str]) -> None:
     """
     Displays all decryption attempts, the best solution, and extracts email.
     Also saves the decrypted message to a file.
@@ -9,7 +10,7 @@ def save_results(best_text: str, correct_shift: int, all_versions: list) -> None
     Args:
         best_text (str): The correctly decrypted Polish message.
         correct_shift (int): The shift value used for decryption.
-        all_versions (list): All 25 decryption attempts to display.
+        all_versions (list): All 26 decryption attempts to display (shifts 0-25).
     """
     
     # Display all versions
@@ -27,6 +28,8 @@ def save_results(best_text: str, correct_shift: int, all_versions: list) -> None
     if email_match:
         print(f"Email: {email_match.group()}")
     
-    # Save to file
-    with open("./solution.txt", "w", encoding="utf-8") as f:
+    # Save to file in the same directory as this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    output_path = os.path.join(script_dir, "solution.txt")
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write(best_text)

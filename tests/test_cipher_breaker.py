@@ -123,10 +123,10 @@ class TestFindSolutionReturnType:
         result = find_solution("abc")
         assert len(result) == 3
     
-    def test_all_versions_has_25_elements(self):
-        """all_versions list contains 25 elements (shifts 1-25)."""
+    def test_all_versions_has_26_elements(self):
+        """all_versions list contains 26 elements (shifts 0-25)."""
         _, _, all_versions = find_solution("abc")
-        assert len(all_versions) == 25
+        assert len(all_versions) == 26
 
 
 class TestFindSolutionPolishText:
@@ -158,15 +158,15 @@ class TestFindSolutionAllVersions:
         # Correct answer should be in the list (shift=21 means index 20)
         assert "jutro jest dzisiaj" in all_versions
     
-    def test_all_versions_first_element_is_shift_1(self):
-        """First element corresponds to shift=1."""
+    def test_all_versions_first_element_is_shift_0(self):
+        """First element corresponds to shift=0 (unchanged text)."""
         _, _, all_versions = find_solution("epomj ezno yudndve")
-        assert all_versions[0] == "donli dymn xtcmcud"
+        assert all_versions[0] == "epomj ezno yudndve"
     
     def test_all_versions_last_element_is_shift_25(self):
         """Last element corresponds to shift=25."""
         _, _, all_versions = find_solution("epomj ezno yudndve")
-        assert all_versions[24] == "fqpnk faop zveoewf"
+        assert all_versions[25] == "fqpnk faop zveoewf"
 
 
 class TestFindSolutionFallback:
@@ -177,7 +177,7 @@ class TestFindSolutionFallback:
         best_text, shift, all_versions = find_solution("bc")
         assert best_text != ""  # should return some result
         assert isinstance(shift, int)
-        assert len(all_versions) == 25
+        assert len(all_versions) == 26
     
     def test_non_polish_text_uses_fallback(self):
         """Non-Polish text uses score-based fallback."""

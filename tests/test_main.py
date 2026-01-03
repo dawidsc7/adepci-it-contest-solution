@@ -6,6 +6,7 @@ from unittest.mock import patch, MagicMock
 # Add parent directory to path to import main module
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from main import main
+import results
 
 
 # ===================== TESTS FOR CLI ARGUMENTS =====================
@@ -18,6 +19,9 @@ class TestMainCLIArguments:
         # Create a fake ciphertext.txt in current directory
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
+        
+        # Mock results.__file__ to save solution.txt in tmp_path
+        monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
         
         # Create test file with known encrypted Polish text
         ciphertext_file = tmp_path / "ciphertext.txt"
@@ -39,6 +43,8 @@ class TestMainCLIArguments:
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
         
+        monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
+        
         custom_file = tmp_path / "custom.txt"
         custom_file.write_text("epomj ezno yudndve", encoding="utf-8")
         
@@ -56,6 +62,8 @@ class TestMainCLIArguments:
         """When text string provided directly, uses it as ciphertext."""
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
+        
+        monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
         
         monkeypatch.setattr(sys, 'argv', ['main.py', 'epomj ezno yudndve'])
         
@@ -78,6 +86,8 @@ class TestMainIntegration:
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
         
+        monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
+        
         test_file = tmp_path / "test_cipher.txt"
         test_file.write_text("epomj ezno yudndve", encoding="utf-8")
         
@@ -99,6 +109,8 @@ class TestMainIntegration:
         """Main function creates solution.txt file."""
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
+        
+        monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
         
         test_file = tmp_path / "input.txt"
         test_file.write_text("bcde", encoding="utf-8")
@@ -170,9 +182,11 @@ class TestMainOutput:
     """Tests verifying printed output."""
     
     def test_prints_all_versions(self, monkeypatch, tmp_path, capsys):
-        """main() prints all 25 decryption versions."""
+        """main() prints all 26 decryption versions."""
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
+        
+        monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
         
         test_file = tmp_path / "test.txt"
         test_file.write_text("bcde", encoding="utf-8")
@@ -183,10 +197,10 @@ class TestMainOutput:
             main()
             captured = capsys.readouterr()
             
-            # Should print 25 versions
+            # Should print 26 versions
             lines = [line for line in captured.out.split('\n') if line.strip()]
-            # At least 25 lines for versions + solution info
-            assert len(lines) >= 25
+            # At least 26 lines for versions + solution info
+            assert len(lines) >= 26
         finally:
             os.chdir(original_cwd)
     
@@ -194,6 +208,8 @@ class TestMainOutput:
         """main() prints decrypted message and shift info."""
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
+        
+        monkeypatch.setattr(results, '__file__', str(tmp_path / "results.py"))
         
         test_file = tmp_path / "test.txt"
         test_file.write_text("epomj ezno yudndve", encoding="utf-8")
@@ -206,5 +222,48 @@ class TestMainOutput:
             
             assert "Odszyfrowana wiadomość:" in captured.out
             assert "Ilość przesunięć:" in captured.out
+        finally:
+            os.chdir(original_cwd)
+
+
+# ===================== TESTS FOR ERROR HANDLING =====================
+
+class TestMainErrorHandling:
+    """Tests for error handling in main()."""
+    
+    def test_file_not_found_shows_error(self, monkeypatch, tmp_path, capsys):
+        """Non-existent file should display error message."""
+        original_cwd = os.getcwd()
+        os.chdir(tmp_path)
+        
+        monkeypatch.setattr(sys, 'argv', ['main.py', 'nonexistent.txt'])
+        
+        try:
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+            assert exc_info.value.code == 1
+            
+            captured = capsys.readouterr()
+            assert "Błąd" in captured.out
+        finally:
+            os.chdir(original_cwd)
+    
+    def test_empty_file_shows_error(self, monkeypatch, tmp_path, capsys):
+        """Empty file should display error message."""
+        original_cwd = os.getcwd()
+        os.chdir(tmp_path)
+        
+        empty_file = tmp_path / "empty.txt"
+        empty_file.write_text("", encoding="utf-8")
+        
+        monkeypatch.setattr(sys, 'argv', ['main.py', str(empty_file)])
+        
+        try:
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+            assert exc_info.value.code == 1
+            
+            captured = capsys.readouterr()
+            assert "Błąd" in captured.out
         finally:
             os.chdir(original_cwd)

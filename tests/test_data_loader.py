@@ -22,9 +22,10 @@ class TestGetEncryptedTextFromFile:
         test_file = os.path.join(os.path.dirname(__file__), "sample_text_for_test_data_loader.txt")
         assert get_encrypted_text(test_file) == "sample text"
     
-    def test_nonexistent_file_returns_input(self):
-        """Returns input string when file does not exist."""
-        assert get_encrypted_text("fake_file.txt") == "fake_file.txt"
+    def test_nonexistent_file_raises_error(self):
+        """Raises FileNotFoundError when file path doesn't exist."""
+        with pytest.raises(FileNotFoundError, match="nie istnieje"):
+            get_encrypted_text("fake_file.txt")
 
 
 class TestGetEncryptedTextDirectString:
@@ -38,9 +39,10 @@ class TestGetEncryptedTextDirectString:
         """Strips leading and trailing whitespace from input."""
         assert get_encrypted_text("  abc xyz  ") == "abc xyz"
     
-    def test_empty_string_after_strip(self):
-        """Handles whitespace-only input."""
-        assert get_encrypted_text("   ") == ""
+    def test_empty_string_after_strip_raises_error(self):
+        """Raises ValueError for whitespace-only input."""
+        with pytest.raises(ValueError, match="pusty"):
+            get_encrypted_text("   ")
 
 
 class TestGetEncryptedTextEdgeCases:

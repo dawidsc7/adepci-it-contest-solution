@@ -3,7 +3,7 @@ from cipher_breaker import find_solution
 from results import save_results
 import sys
 
-def main():
+def main() -> None:
     """
     Main entry point for the Caesar cipher breaker program.
 
@@ -16,11 +16,17 @@ def main():
     2. Finds the correct decryption using brute-force + language detection
     3. Saves and displays the results
     """
-    
-    source = sys.argv[1] if len(sys.argv) > 1 else None
-    ciphertext = get_encrypted_text(source)
-    best_text, correct_shift, all_versions = find_solution(ciphertext)
-    save_results(best_text, correct_shift, all_versions)
+    try:
+        source = sys.argv[1] if len(sys.argv) > 1 else None
+        ciphertext = get_encrypted_text(source)
+        best_text, correct_shift, all_versions = find_solution(ciphertext)
+        save_results(best_text, correct_shift, all_versions)
+    except FileNotFoundError as e:
+        print(f"Błąd: {e}")
+        sys.exit(1)
+    except ValueError as e:
+        print(f"Błąd: {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

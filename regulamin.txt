@@ -1,0 +1,125 @@
+REGULAMIN KONKURSU
+„Płatne praktyki w Tukano Software House”
+§1. Postanowienia ogólne
+1. Organizatorem Konkursu (dalej: „Konkurs”) jest TUKANO SOFTWARE HOUSE SP. Z O.O. z siedzibą w Warszawie ( 02-697) przy ul.Rzymowskiego 34, wpisana do Rejestru Przedsiębiorców Krajowego Rejestru Sądowego pod numerem KRS 0000825558, sąd rejestrowy: Sąd Rejonowy dla m.st. Warszawy w Warszawie, XIII Wydział Gospodarczy Krajowego Rejestru Sądowego, kapitał zakładowy 5 000,00 PLN, NIP: 5213888584 (dalej: „Organizator”).
+2. Konkurs odbywa się pod marką Adepci IT i powiązany jest z konferencją „Jutro jest dzisiaj”.
+3. Udział w Konkursie jest dobrowolny i bezpłatny.
+4. Celem Konkursu jest:
+1. popularyzacja praktycznych umiejętności programistycznych,
+2. wyłonienie osoby, która najlepiej rozwiąże zadanie konkursowe opisane w §3,
+3. przyznanie nagrody w postaci płatnych praktyk w Tukano Software House.
+5. Regulamin określa zasady uczestnictwa w Konkursie, kryteria oceny, sposób wyłonienia laureata, nagrodę oraz zasady przetwarzania danych osobowych uczestników.
+§2. Zasady uczestnictwa w Konkursie
+1. W Konkursie mogą wziąć udział osoby fizyczne, które w dniu przesłania zgłoszenia:
+1. posiadają status ucznia szkoły średniej, branżowej, policealnej lub status studenta uczelni wyższej (studia I, II stopnia, jednolite magisterskie lub podyplomowe),
+2. posiadają pełną zdolność do czynności prawnych lub działają za zgodą swojego przedstawiciela ustawowego.
+2. Uczestnik powinien dysponować:
+1. aktywnym adresem e-mail,
+2. kontem w serwisie do hostowania kodu (np. GitHub, GitLab, Bitbucket) lub innym repozytorium umożliwiającym dostęp do kodu źródłowego online.
+3. W Konkursie nie mogą brać udziału:
+1. pracownicy, współpracownicy oraz członkowie władz Organizatora,
+2. osoby zaangażowane w organizację Konkursu,
+3. członkowie najbliższej rodziny osób wymienionych w pkt 1–2 (małżonkowie, wstępni, zstępni, rodzeństwo).
+4. Przystąpienie do Konkursu następuje poprzez przesłanie poprawnego zgłoszenia, o którym mowa w §4, w terminie wskazanym w §7.
+5. Zgłoszenie udziału w Konkursie jest równoznaczne z:
+1. akceptacją niniejszego Regulaminu,
+2. potwierdzeniem, że przesłane zgłoszenie jest samodzielną pracą Uczestnika i nie narusza praw osób trzecich.
+§3. Zadanie konkursowe
+1. Treść zadania konkursowego:
+epomj ezno yudndve. nuopxuiv diozgdbzixev rkgtrv iv ivnuv xjyudziijnx. vwt fjiotipjrvx rturvidz, rtngde fjy uvyvidv iv: epomj.ezno.yudndve@vyzkxd.do
+Zadaniem jest:
+Napisać program testujący wszystkie przesunięcia, wykorzystując technikę brute-force, tzn. program powinien:
+● dla podanego zaszyfrowanego tekstu kolejno zastosować wszystkie możliwe przesunięcia liter w obrębie alfabetu łacińskiego (26 znaków),
+● dla każdego przesunięcia wygenerować nową wersję tekstu (pozostałe znaki: spacje, przecinek, kropka, dwukropek, @ pozostają bez zmian),
+● wypisać wszystkie otrzymane wersje.
+Następnie program powinien automatycznie wykryć, która z wygenerowanych wersji jest poprawną wiadomością w języku polskim, używając:
+● biblioteki do detekcji języka lub
+● modelu AI / API wspierającego rozpoznawanie języka.
+Na koniec program powinien:
+● wskazać najbardziej prawdopodobną, poprawnie odszyfrowaną polską wiadomość,
+● wyodrębnić z niej adres e-mail, na który należy wysłać kod z tego zadania.
+Zakładany rodzaj szyfru oraz sposób przesuwania liter można wywnioskować z nawiązań do jego nazwy umieszczonych na dołączonej grafice.
+Wysyłać link do repozytorium z kodem oraz plik tekstowy z odszyfrowanym komunikatem.
+2. Uczestnik może zrealizować zadanie w dowolnym języku programowania, pod warunkiem, że możliwe będzie uruchomienie i przetestowanie rozwiązania przez Jury.
+3. Wynikiem pracy konkursowej jest:
+1. kod źródłowy programu zgodny z opisem powyżej,
+2. plik tekstowy zawierający odszyfrowany komunikat w języku polskim.
+§4. Zgłaszanie prac konkursowych
+1. Zgłoszenie do Konkursu odbywa się poprzez przesłanie:
+1. linku do repozytorium z kodem,
+2. pliku tekstowego z odszyfrowaną wiadomością,
+3. podstawowych danych Uczestnika: imię, nazwisko, status (uczeń / student), nazwa szkoły lub uczelni,
+4. danych kontaktowych: adres e-mail Uczestnika.
+2. Zgłoszenie należy przesłać na adres e-mail wyodrębniony z odszyfrowanej wiadomości. Adres ten stanowi element zadania konkursowego.
+3. W treści wiadomości oraz – o ile to możliwe – w jej tytule zaleca się umieszczenie formatu: „Konkurs Adepci IT – płatne praktyki – imię i nazwisko”.
+4. Zgłoszenia przyjmowane są w terminie wskazanym w §7 Regulaminu.
+5. Przesłanie zgłoszenia konkursowego jest równoznaczne z:
+1. akceptacją Regulaminu,
+2. wyrażeniem zgody na przetwarzanie danych osobowych na zasadach określonych w Polityce prywatności Konkursu, stanowiącej odrębny dokument oraz załącznik do Regulaminu.
+6. Pytania organizacyjne, niezwiązane z samym rozwiązaniem zadania, można kierować na adres e-mail: konferencja@adepci.it
+§5. Przebieg Konkursu i ocena prac
+1. Ocena prac konkursowych odbywa się w dwóch etapach:
+1. Etap 1 – ocena formalna i merytoryczna rozwiązania zadania:
+■ weryfikacja, czy zgłoszenie zostało przesłane w terminie,
+■ sprawdzenie kompletności zgłoszenia (link do repozytorium, plik tekstowy, dane Uczestnika),
+■ uruchomienie programu i sprawdzenie, czy:
+■ generuje wszystkie przesunięcia,
+■ wykorzystuje mechanizm detekcji języka (biblioteka lub API),
+■ wskazuje najbardziej prawdopodobną polską wersję tekstu,
+■ poprawnie wyodrębnia adres e-mail z odszyfrowanej wiadomości,
+■ odszyfrowana wiadomość jest poprawna.
+2. Etap 2 – rozmowa z przedstawicielem Tukano Software House:
+■ do etapu 2 przechodzą osoby, które poprawnie rozwiązały zadanie,
+■ rozmowa dotyczy sposobu rozwiązania zadania, przyjętych założeń, architektury kodu, decyzji technicznych oraz możliwości rozwinięcia rozwiązania,
+■ rozmowa odbywa się online lub stacjonarnie – zgodnie z informacją przekazaną Uczestnikom przez Organizatora.
+2. Prace spełniające wymagania formalne i merytoryczne ocenia Jury powołane przez Organizatora. Jury stanowią przedstawiciele Organizatora.
+3. Przy ocenie rozwiązań brane są pod uwagę w szczególności następujące kryteria:
+1. poprawność działania programu,
+2. jakość kodu,
+3. sposób wykorzystania narzędzi do detekcji języka / AI,
+4. umiejętność omówienia rozwiązania podczas rozmowy z przedstawicielem Tukano.
+4. Jury sporządza ranking Uczestników na podstawie łącznej liczby punktów uzyskanych w obu etapach.
+5. Laureatem Konkursu zostaje Uczestnik, który uzyska najwyższą łączną liczbę punktów.
+6. W przypadku remisu Jury może:
+1. przeprowadzić dodatkową krótką rozmowę techniczną z wybranymi Uczestnikami lub
+2. wziąć pod uwagę dodatkowe kryteria (np. możliwość realnego rozpoczęcia praktyk w najbliższym czasie).
+7. Decyzje Jury są ostateczne i nie przysługuje od nich odwołanie.
+§6. Nagroda
+1. Nagrodą główną w Konkursie jest możliwość odbycia płatnych praktyk na rzecz Organizatora – Tukano Software House.
+2. Warunki odbycia praktyk, w szczególności:
+1. wymiar godzinowy,
+2. czas trwania praktyk,
+3. wysokość wynagrodzenia,
+4. forma pracy (zdalna / stacjonarna / hybrydowa),
+5. zakres zadań i obowiązków, zostaną ustalone indywidualnie pomiędzy Organizatorem a Laureatem, z uwzględnieniem jego dyspozycyjności, wiedzy i doświadczenia.
+3. Organizator zakłada, że okres praktyk nie będzie krótszy niż 2 miesiące kalendarzowe i nie dłuższy niż 3 miesiące kalendarzowe, chyba że strony ustalą
+inaczej.
+4. Praktyki powinny rozpocząć się nie później niż do dnia: 01.03.2026
+5. Laureat zobowiązany jest, w terminie 5 dni roboczych od dnia ogłoszenia wyników, potwierdzić chęć odbycia praktyk oraz wstępne preferencje dotyczące terminu ich rozpoczęcia. Brak potwierdzenia w tym terminie może skutkować utratą prawa do nagrody.
+6. W przypadku rezygnacji Laureata z praktyk lub niespełnienia warunków niezbędnych do ich odbycia, Organizator może przyznać nagrodę osobie kolejnej w rankingu.
+7. Nagroda nie podlega wymianie na ekwiwalent pieniężny ani przeniesieniu na osobę trzecią.
+§7. Harmonogram Konkursu
+1. Organizator ustala następujący harmonogram Konkursu:
+1. Ogłoszenie Konkursu: 12.12.2016 r.
+2. Termin nadsyłania rozwiązań zadania konkursowego: do 7 stycznia 2026 r., godz. 23:59.
+3. Weryfikacja zgłoszeń oraz ocena rozwiązań (Etap 1): 8–13 stycznia 2026 r.
+4. Rozmowy z Uczestnikami zakwalifikowanymi do Etapu 2: 13–19 stycznia 2026 r.
+5. Ogłoszenie zwycięzcy: 22 stycznia 2026 r. podczas konferencji „Jutro jest dzisiaj” na WSB-NLU w Nowym Sączu.
+2. Organizator może ogłosić wyniki Konkursu również: drogą e-mailową do Uczestników.
+3. Organizator zastrzega sobie prawo do zmiany harmonogramu w szczególnie uzasadnionych przypadkach (np. przyczyn niezależnych od Organizatora), zobowiązując się do poinformowania Uczestników za pośrednictwem strony internetowej i/lub poczty elektronicznej.
+§8. Dane osobowe
+1. Administratorem danych osobowych Uczestników Konkursu jest Organizator, wskazany w §1 ust. 1.
+2. Zasady przetwarzania danych osobowych w związku z Konkursem określa dokument „Polityka prywatności Konkursu – Płatne praktyki w Tukano Software House”, stanowiący załącznik do niniejszego Regulaminu i dostępny na stronie konferencja.adepci.it
+3. Przekazanie danych osobowych jest dobrowolne, lecz niezbędne do udziału w Konkursie.
+§9. Postanowienia końcowe
+1. Regulamin wchodzi w życie z dniem jego opublikowania na stronie konferencja.adepci.it
+2. W sprawach nieuregulowanych niniejszym Regulaminem zastosowanie mają przepisy prawa polskiego.
+3. Organizator zastrzega sobie prawo do zmiany Regulaminu w trakcie trwania Konkursu, o ile nie naruszy to praw nabytych Uczestników. Zmieniony Regulamin zostanie niezwłocznie opublikowany na stronie internetowej oraz będzie stosowany od chwili jego ogłoszenia.
+4. Organizator nie ponosi odpowiedzialności za:
+1. problemy techniczne niezależne od niego, uniemożliwiające przesłanie zgłoszenia,
+2. błędnie podane dane kontaktowe przez Uczestnika.
+5. Zgłaszając się do Konkursu, Uczestnik potwierdza, że:
+1. zapoznał się z treścią Regulaminu i akceptuje jego postanowienia,
+2. jest autorem przesłanego kodu lub posiada pełne prawa do korzystania z niego i udostępnienia Organizatorowi w ramach Konkursu,
+3. jego zgłoszenie nie narusza praw osób trzecich.
+6. Wszelkie wątpliwości interpretacyjne związane z Regulaminem rozstrzyga Organizator.
