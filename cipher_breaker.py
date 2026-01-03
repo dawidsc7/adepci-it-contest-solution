@@ -30,7 +30,7 @@ def find_solution(ciphertext: str) -> tuple[str, int, list[str]]:
         candidate = decrypt_text(ciphertext, shift)
         all_versions.append(candidate)
         
-        # Check if detected language is Polish
+
         detected_language = detector.detect_language_of(candidate)
         if detected_language == Language.POLISH:
             confidence = detector.compute_language_confidence(candidate, Language.POLISH)

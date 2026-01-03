@@ -13,13 +13,13 @@ def save_results(best_text: str, correct_shift: int, all_versions: list[str]) ->
         all_versions (list): All 26 decryption attempts to display (shifts 0-25).
     """
     
-    # Display all versions
+
     for version in all_versions:
         print(version)
     if not best_text:
         print("\n Nie udało się znaleźć rozwiązania.")
         return
-    # Display the solution
+
     print(f"\nOdszyfrowana wiadomość: {best_text}")
     print(f"Ilość przesunięć: {correct_shift}")
     
