@@ -68,9 +68,9 @@ Wybrano bibliotekę `lingua-py` ze względu na:
 ## Przykładowy output
 
 ```
-Odszyfrowana wiadomość: Wyslij email na adres rekrutacja@adepci.pl aby dostac staz...
-Ilość przesunięć: 7
-Email: rekrutacja@adepci.pl
+Odszyfrowana wiadomość: jutro jest dzisiaj. sztuczna inteligencja wplywa na nasza codziennosc. aby kontynuowac wyzwanie, wyslij kod zadania na: jutro.jest.dzisiaj@adepci.it
+Ilość przesunięć: 21
+Email: jutro.jest.dzisiaj@adepci.it
 ```
 
 Wynik zapisywany jest również do pliku `solution.txt`.

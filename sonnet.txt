@@ -1,0 +1,133 @@
+● Przeanalizowałem Twoje rozwiązanie. Oto konkretne problemy:
+
+  🔴 KRYTYCZNE PROBLEMY
+
+  1. cipher_breaker.py:42-45 - Źle zaprojektowany fallback
+
+  if not best_text and all_versions:
+      best_text = all_versions[0]  # ❌ Zwraca oryginalny ZASZYFROWANY tekst!
+      correct_shift = 0
+
+  Problem: Gdy żaden tekst nie zostanie wykryty jako polski, zwracasz all_versions[0] (shift=0) czyli oryginalny zaszyfrowany tekst. To błąd logiczny. 
+
+  Weryfikacja:
+  python main.py "abc xyz 123"
+  # Output: "Odszyfrowana wiadomość: abc xyz 123" (shift=0)
+
+  Co poprawić: Jeśli żaden tekst nie jest polski, wybierz wersję z najwyższym confidence score spośród WSZYSTKICH języków:
+  # Zamiast prostego fallback, oblicz confidence dla wszystkich
+  if not best_text:
+      best_confidence = 0.0
+      for i, candidate in enumerate(all_versions):
+          confidence_values = detector.compute_language_confidence_values(candidate)
+          max_conf = max(confidence_values.values()) if confidence_values else 0.0
+          if max_conf > best_confidence:
+              best_confidence = max_conf
+              best_text = candidate
+              correct_shift = i
+
+  2. Testy nie pokrywają pełnego tekstu z ciphertext.txt
+
+  Wszystkie testy używają skróconej wersji:
+  - tests/test_cipher_breaker.py:137: "epomj ezno yudndve" (3 słowa)
+  - Brak testu dla pełnego tekstu z emailem
+
+  Problem: Nie testujesz czy program poprawnie radzi sobie z pełnym tekstem konkursu zawierającym email.
+
+  Co poprawić: Dodaj test:
+  def test_full_contest_ciphertext(self):
+      """Test with actual contest ciphertext including email."""
+      full_cipher = "epomj ezno yudndve. nuopxuiv diozgdbzixev rkgtrv iv ivnuv xjyudziijnx. vwt fjiotipjrvx rturvidz, rtngde fjy uvyvidv iv: epomj.ezno.yudndve@vyzkxd.do"
+      best_text, shift, _ = find_solution(full_cipher)
+      assert "jutro.jest.dzisiaj@adepci.it" in best_text
+      assert shift == 21
+
+  3. cipher_breaker.py:5 - Detektor tworzony przy każdym imporcie
+
+  detector = LanguageDetectorBuilder.from_all_languages().build()  # ❌ Bardzo kosztowne!
+
+  Problem: from_all_languages() ładuje modele dla ~75 języków przy każdym imporcie modułu. To trwa kilka sekund i marnuje pamięć.
+
+  Weryfikacja: Uruchom time python -c "import cipher_breaker" - zajmuje ~2-3 sekundy.
+
+  Co poprawić:
+  # Opcja 1: Ładuj tylko potrzebne języki
+  detector = LanguageDetectorBuilder.from_languages(Language.POLISH, Language.ENGLISH).build()
+
+  # Opcja 2: Lazy loading
+  _detector = None
+  def get_detector():
+      global _detector
+      if _detector is None:
+          _detector = LanguageDetectorBuilder.from_all_languages().build()
+      return _detector
+
+  🟡 ŚREDNIE PROBLEMY
+
+  4. cipher_breaker.py:34-40 - Nieoptymalne sprawdzanie confidence
+
+  detected_language = detector.detect_language_of(candidate)
+  if detected_language == Language.POLISH:
+      confidence = detector.compute_language_confidence(candidate, Language.POLISH)
+
+  Problem: Wywołujesz detect_language_of() a potem compute_language_confidence() - to podwójna analiza tego samego tekstu.
+
+  Co poprawić:
+  confidence = detector.compute_language_confidence(candidate, Language.POLISH)
+  if confidence > best_confidence:  # Sprawdzaj confidence bezpośrednio
+      best_confidence = confidence
+      best_text = candidate
+      correct_shift = shift
+
+  5. results.py:19-21 - Nie zapisuje solution.txt gdy best_text jest pusty
+
+  if not best_text:
+      print("\n Nie udało się znaleźć rozwiązania.")
+      return  # ❌ Nie tworzy solution.txt!
+
+  Problem: Jury może oczekiwać że solution.txt zawsze istnieje (nawet pusty).
+
+  Co poprawić: Zapisz pusty plik lub komunikat:
+  if not best_text:
+      print("\n Nie udało się znaleźć rozwiązania.")
+      with open(output_path, "w", encoding="utf-8") as f:
+          f.write("")
+      return
+
+  🟢 DROBNE UWAGI
+
+  6. tests/test_cipher_breaker.py:169 - Test sprawdza czy index się zgadza
+
+  assert all_versions[25] == "fqpnk faop zveoewf"
+
+  Twardo kodowany wynik dla shift=25. Jeśli zmienisz logikę, test się posypie. Lepiej:
+  assert all_versions[25] == decrypt_text("epomj ezno yudndve", 25)
+
+  7. Brak testu edge case: Bardzo długi tekst (>10KB)
+
+  Lingua-py może mieć problemy z bardzo długimi tekstami. Dodaj test dla tekstu >1000 słów.
+
+  8. README.md:58 - Nieprecyzyjna dokumentacja fallback
+
+  4. Fallback: Dla bardzo krótkich tekstów, gdy detekcja języka nie jest możliwa, zwracany jest tekst oryginalny.
+
+  To nieprawda dla długich tekstów które nie są polskie. Lepiej: "zwracana jest wersja z najwyższym confidence score lub tekst oryginalny jeśli detekcja całkowicie zawiedzie".
+
+  ✅ ZGODNOŚĆ Z REGULAMINEM
+
+  - ✅ §3: Wszystkie 26 przesunięć - DZIAŁA
+  - ✅ §3: Detekcja języka (lingua-py) - DZIAŁA
+  - ✅ §3: Wyodrębnienie emaila - DZIAŁA
+  - ✅ §3: Wypisanie wszystkich wersji - DZIAŁA
+  - ✅ §5: Jakość kodu - DOBRA (czytelny, modularny, testy)
+
+  KONKRETNE DZIAŁANIA
+
+  Przed wysłaniem zgłoszenia:
+
+  1. Napraw fallback (cipher_breaker.py:42-45) - to może powodować błędne wyniki
+  2. Zoptymalizuj detektor (cipher_breaker.py:5) - użyj tylko Polish+English
+  3. Dodaj test pełnego tekstu - upewnij się że email się wyodrębnia
+  4. Usuń podwójną analizę (cipher_breaker.py:34-36) - szybciej i czyściej
+
+  Twoje rozwiązanie jest solidne, ale te 4 punkty mogą decydować o punktach za "jakość kodu" i "poprawność działania" w §5.3.

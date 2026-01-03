@@ -187,3 +187,21 @@ class TestFindSolutionEdgeCases:
         # Function should still return a result
         assert best_text != ""
         assert isinstance(shift, int)
+
+
+class TestFindSolutionContestText:
+    """Tests for the actual contest ciphertext."""
+    
+    def test_full_contest_ciphertext_decrypts_correctly(self):
+        """Full contest text should decrypt to Polish message."""
+        full_cipher = "epomj ezno yudndve. nuopxuiv diozgdbzixev rkgtrv iv ivnuv xjyudziijnx. vwt fjiotipjrvx rturvidz, rtngde fjy uvyvidv iv: epomj.ezno.yudndve@vyzkxd.do"
+        best_text, shift, _ = find_solution(full_cipher)
+        assert shift == 21
+        assert "jutro jest dzisiaj" in best_text
+    
+    def test_full_contest_ciphertext_contains_email(self):
+        """Full contest decryption should contain the correct email."""
+        full_cipher = "epomj ezno yudndve. nuopxuiv diozgdbzixev rkgtrv iv ivnuv xjyudziijnx. vwt fjiotipjrvx rturvidz, rtngde fjy uvyvidv iv: epomj.ezno.yudndve@vyzkxd.do"
+        best_text, _, _ = find_solution(full_cipher)
+        assert "jutro.jest.dzisiaj@adepci.it" in best_text
+
