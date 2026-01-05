@@ -171,22 +171,20 @@ class TestFindSolutionAllVersions:
 
 class TestFindSolutionEdgeCases:
     """Tests for edge cases with short or ambiguous text."""
-    
-    def test_short_text_returns_result(self):
-        """Very short text still returns a result."""
+
+    def test_short_text_returns_proper_types(self):
+        """Very short text returns proper types without crashing."""
         best_text, shift, all_versions = find_solution("bc")
-        assert best_text != ""  # should return some result
+        assert isinstance(best_text, str)
         assert isinstance(shift, int)
         assert len(all_versions) == 26
-    
-    def test_non_polish_text_returns_result(self):
-        """Non-Polish text still returns best confidence match."""
-        # Text that probably won't be detected as Polish
-        result = find_solution("xyz")
-        best_text, shift, all_versions = result
-        # Function should still return a result
-        assert best_text != ""
+
+    def test_non_polish_text_returns_empty_or_detected(self):
+        """Non-Polish text returns empty string if no Polish detected."""
+        best_text, shift, all_versions = find_solution("xyz")
+        assert isinstance(best_text, str)
         assert isinstance(shift, int)
+        assert len(all_versions) == 26
 
 
 class TestFindSolutionContestText:

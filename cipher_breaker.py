@@ -39,11 +39,6 @@ def find_solution(ciphertext: str) -> tuple[str, int, list[str]]:
                 best_text = candidate
                 correct_shift = shift
     
-    # Fallback: if no Polish detected, return original text (shift=0)
-    if not best_text and all_versions:
-        best_text = all_versions[0]
-        correct_shift = 0
-    
     return best_text, correct_shift, all_versions
 
 

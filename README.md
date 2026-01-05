@@ -55,7 +55,7 @@ Program wykorzystuje podejście brute-force z inteligentną detekcją języka:
 1. **Generowanie kandydatów**: Dla każdego z 26 możliwych przesunięć (0-25) generowany jest odszyfrowany tekst.
 2. **Detekcja języka**: Każdy kandydat jest analizowany przez bibliotekę `lingua-py`, która oblicza pewność (confidence score 0.0-1.0) że tekst jest w języku polskim.
 3. **Wybór najlepszego**: Kandydat z najwyższym confidence score jest wybierany jako rozwiązanie.
-4. **Fallback**: Dla bardzo krótkich tekstów, gdy detekcja języka nie jest możliwa, zwracany jest tekst oryginalny.
+4. **Obsługa błędów**: Jeśli żaden kandydat nie zostanie wykryty jako polski, użytkownik otrzymuje stosowny komunikat.
 
 ## Dlaczego lingua-py?
 
